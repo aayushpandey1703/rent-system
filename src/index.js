@@ -24,12 +24,27 @@ app.get("",(req,res)=>{
     res.render('login')
 })
 
-app.post('/register',(req,res)=>{
+app.post('/register',async (req,res)=>{
     const pass=req.body.pass
     const confirm=req.body.confirm
-    if(pass != confirm)
-     return res.send({error:'password mismatched'})
-    res.send({error:undefined})
+    const email=req.body.email
+    const username=req.body.username
+    try{
+        const check=await login.find({email:email})
+        if(check.length>0)
+            return res.send({error:'email already exists'})
+        const newUser=new login({
+            username:username,
+            email:email,
+            password:pass
+        })
+        await newUser.save()
+        res.send({error:undefined})
+
+    }catch(e){
+        res.send({error:'something went wrong'})
+    }
+    
 })
 
 app.get('/home/:id',(req,res)=>{

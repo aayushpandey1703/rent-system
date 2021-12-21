@@ -33,34 +33,35 @@
 	<div class="limiter" style="margin-top:-9.5%">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form class="login100-form validate-form">
+				<form id="form" class="login100-form validate-form">
 					<span class="login100-form-title p-b-43" >
 						Register User
 					</span>
-					<div id="error">
+				<div id="error">
 					
-					</div>
+				</div>
 
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="username">
+					<div class="wrap-input100 validate-input" id="username" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" id="user" name="username">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Username</span>
 					</div>
 					
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" name="email" required>
+					<div class="wrap-input100 validate-input">
+						<input class="input100" type="email" id='email' name="Email">
 						<span class="focus-input100"></span>
 						<span class="label-input100">Email*</span>
 					</div>
 					
 					
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" id="pass" name="pass" required>
+					<div class="wrap-input100 validate-input" id="password" data-validate="Password is required">
+						<input class="input100" type="password" id="pass" name="pass" value="" >
 						<span class="focus-input100"></span>
 						<span class="label-input100">Password*</span>
+						
 					</div>
-					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<input class="input100" type="password" id="confirm" name="confirm" required>
+					<div class="wrap-input100 validate-input" id="confirm" data-validate="Password is required">
+						<input class="input100" type="password" id="cpass" name="confirm" >
 						<span class="focus-input100"></span>
 						<span class="label-input100">Confirm password*</span>
 					</div>
@@ -82,7 +83,7 @@
 			
 
 					<div class="container-login100-form-btn">
-						<button type="button" id="submit" class="login100-form-btn">
+						<button type="submit" id="submit" class="login100-form-btn">
 							Login
 						</button>
 					</div>
@@ -122,20 +123,66 @@
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+
 
 	<script type="text/javascript">
+	
 	$(document).ready(()=>{
-		$('#submit').click((e)=>{
+		$('form').submit((e)=>{
 			e.preventDefault()
-			const pass=$('#pass').val()
-			const confirm=$('#confirm').val()
+				var constraints = {
+   username:{
+	  length:{
+		  minimum:5,
+		  message:'Username should be atleast 5 characters long'
+	  },
+  },
+  password: {
+    presence: true,
+   length:{
+	   minimum:5	   
+   },
+	format:{
+		pattern:'[a-z0-9]+',
 
+		message:'invalid pattern'
+	},
+	
+  },
+ 
+  confirm:{
+	  presence:true,
+	  equality:{
+		  attribute:'password',
+		  message:'password mismatch'
+	  }
+  }
+ 
+};
+			const pass=$('#pass').val()
+			const confirm=$('#cpass').val()
+			const username=$('#user').val()
+			const email=$("#email").val()
+			if(validate({password:pass,username:username,confirm:confirm}, constraints)){
+				const valid=validate({username:username,password:pass,confirm:confirm}, constraints)
+				const validArray=Object.keys(valid)
+				console.log(valid)
+				validArray.forEach((ele)=>{
+					
+					document.getElementById(ele).setAttribute('data-validate',valid[ele][0])
+					document.getElementById(ele).style.borderColor='red'
+				})
+			}
+			else{
 			$.ajax({
 				type:'post',
 				url:'/register',
 				data:{
 					"pass":pass,
-					"confirm":confirm
+					"confirm":confirm,
+					"email":email,
+					"username":username
 				},
 				dataType:'text',
 				
@@ -146,9 +193,15 @@
 					else
 						window.location.href='/home/1234567'
 			})
-
+			}
+		
 		})
+		
 	})
+
+// => {
+//   "password": ["Password must be at least 6 characters"]
+// }
 	</script>
 
 </body>
