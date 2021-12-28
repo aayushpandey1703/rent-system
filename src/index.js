@@ -25,8 +25,7 @@ app.get("",(req,res)=>{
 })
 
 app.post('/register',async (req,res)=>{
-    const pass=req.body.pass
-    const confirm=req.body.confirm
+    const pass=req.body.password
     const email=req.body.email
     const username=req.body.username
     try{
@@ -42,9 +41,16 @@ app.post('/register',async (req,res)=>{
         res.send({error:undefined})
 
     }catch(e){
-        res.send({error:'something went wrong'})
+        res.send({error:e})
     }
     
+})
+
+app.post('/login',async (req,res)=>{
+     const user=await login.findOne(req.body)
+     if (!user)
+        return res.send({error:'User does not exist'})
+    res.send({})
 })
 
 app.get('/home/:id',(req,res)=>{

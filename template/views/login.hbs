@@ -33,19 +33,16 @@
 	<div class="limiter" style="margin-top:-9.5%">
 		<div class="container-login100">
 			<div class="wrap-login100">
-				<form id="form" class="login100-form validate-form">
-					<span class="login100-form-title p-b-43" >
-						Register User
+				<div id='loginForm'>
+					<form id="login" class="login100-form validate-form">
+					<span class="login100-form-title p-b-43" id="title">
+						login User
 					</span>
 				<div id="error">
 					
 				</div>
+				<div id='fields'>
 
-					<div class="wrap-input100 validate-input" id="username" data-validate = "Valid email is required: ex@abc.xyz">
-						<input class="input100" type="text" id="user" name="username">
-						<span class="focus-input100"></span>
-						<span class="label-input100">Username</span>
-					</div>
 					
 					<div class="wrap-input100 validate-input">
 						<input class="input100" type="email" id='email' name="Email">
@@ -60,13 +57,11 @@
 						<span class="label-input100">Password*</span>
 						
 					</div>
-					<div class="wrap-input100 validate-input" id="confirm" data-validate="Password is required">
-						<input class="input100" type="password" id="cpass" name="confirm" >
-						<span class="focus-input100"></span>
-						<span class="label-input100">Confirm password*</span>
-					</div>
+	
 
-					<div class="flex-sb-m w-full p-t-3 p-b-32">
+					
+				</div>
+				<div class="flex-sb-m w-full p-t-3 p-b-32">
 						<div class="contact100-form-checkbox">
 							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
 							<label class="label-checkbox100" for="ckb1">
@@ -74,7 +69,7 @@
 							</label>
 						</div>
 
-						<div>
+						<div id='forgot'>
 							<a href="#" class="txt1">
 								Forgot Password?
 							</a>
@@ -90,13 +85,78 @@
 					
 					<div class="text-center p-t-46 p-b-20">
 						<span class="txt2">
-							or sign up using
+							<a href="#" onclick="redirect()">sign up</a>
 						</span>
 					</div>
+					
 
 					
 				</form>
+				</div>
+				<div id='regForm'>
+				<form id="register" class="login100-form validate-form">
+					<span class="login100-form-title p-b-43" id="title">
+						Register User
+					</span>
+				<div id="regerror">
+					
+				</div>
+				<div id='fields'>
+<div class="wrap-input100 validate-input" id="username" data-validate = "Valid email is required: ex@abc.xyz">
+						<input class="input100" type="text" id="reguser" name="username">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Username</span>
+					</div>
+					
+					<div class="wrap-input100 validate-input">
+						<input class="input100" type="email" id='regemail' name="Email">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Email*</span>
+					</div>
+					
+					
+					<div class="wrap-input100 validate-input" id="regpass" data-validate="Password is required">
+						<input class="input100" type="password" id="regpassword" name="regpass">
+						<span class="focus-input100"></span>
+						<span class="label-input100">Password*</span>
+						
+					</div>
+					<div class="wrap-input100 validate-input" id="confirm" data-validate="Password is required">
+						<input class="input100" type="password" id="regcpass" name="confirm" >
+						<span class="focus-input100"></span>
+						<span class="label-input100">Confirm password*</span>
+					</div>
 
+					
+				</div>
+				<div class="flex-sb-m w-full p-t-3 p-b-32">
+						<div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+							</label>
+						</div>
+
+						
+					</div>
+			
+
+					<div class="container-login100-form-btn">
+						<button type="submit" id="submit" class="login100-form-btn">
+							Register
+						</button>
+					</div>
+					
+					<div class="text-center p-t-46 p-b-20">
+						<span class="txt2">
+							<a href="#" onclick="redirectLogin()">sign in</a>
+						</span>
+					</div>
+					
+
+					
+				</form>
+				</div>
 				<div class="login100-more" style="background-image: url('images/bg-01.jpg');">
 				</div>
 			</div>
@@ -127,44 +187,52 @@
 
 
 	<script type="text/javascript">
+	$("#regForm").hide()
+	const redirect=()=>{
+		$('#loginForm').hide()
+		$('#regForm').show()
 	
-	$(document).ready(()=>{
-		$('form').submit((e)=>{
+		}
+	const redirectLogin=()=>{
+		$('#regForm').hide()
+		$('#loginForm').show()
+		
+	}
+
+	$('#register').submit((e)=>{
 			e.preventDefault()
-				var constraints = {
+			var constraints = {
+
    username:{
 	  length:{
 		  minimum:5,
 		  message:'Username should be atleast 5 characters long'
 	  },
   },
-  password: {
-    presence: true,
-   length:{
-	   minimum:5	   
-   },
-	format:{
-		pattern:'[a-z0-9]+',
 
-		message:'invalid pattern'
-	},
+  regpass: {
+	  presence:true,
+   length:{
+	   minimum:5,
+	   message:'frfr'	   
+   		},
 	
   },
  
   confirm:{
 	  presence:true,
 	  equality:{
-		  attribute:'password',
+		  attribute:'regpass',
 		  message:'password mismatch'
 	  }
   }
  
 };
-			const pass=$('#pass').val()
-			const confirm=$('#cpass').val()
-			const username=$('#user').val()
-			const email=$("#email").val()
-			if(validate({password:pass,username:username,confirm:confirm}, constraints)){
+			const pass=$('#regpassword').val()
+			const confirm=$('#regcpass').val()
+			const username=$('#reguser').val()
+			const email=$("#regemail").val()
+			if(validate({regpass:pass,username:username,confirm:confirm}, constraints)){
 				const valid=validate({username:username,password:pass,confirm:confirm}, constraints)
 				const validArray=Object.keys(valid)
 				console.log(valid)
@@ -179,8 +247,7 @@
 				type:'post',
 				url:'/register',
 				data:{
-					"pass":pass,
-					"confirm":confirm,
+					"password":pass,
 					"email":email,
 					"username":username
 				},
@@ -189,7 +256,7 @@
 			}).done((result)=>{
 					const a=JSON.parse(result)
 					if(a.error)
-						$('#error').html('<div class="error"><h5>'+a.error+'</h5></div>')
+						$('#regerror').html('<div class="regerror"><h5>'+a.error+'</h5></div>')
 					else
 						window.location.href='/home/1234567'
 			})
@@ -197,11 +264,33 @@
 		
 		})
 		
-	})
 
-// => {
-//   "password": ["Password must be at least 6 characters"]
-// }
+$('#login').submit((e)=>{
+	e.preventDefault()
+	var email=$('#email').val()
+	var pass=$('#pass').val()
+	
+	$.ajax({
+		type:'post',
+		url:'/login',
+		data:{
+			'email':email,
+			'password':pass
+		},
+		dataType:'text'
+	}).done((result)=>{
+		const resultObject=JSON.parse(result)
+		console.log(resultObject)
+		if(resultObject.error)
+		{
+			$('#error').html('<div class="error"><h5>'+resultObject.error+'</h5></div>')
+
+		}
+		else{
+			window.location.href='/home/12345'
+		}
+	})
+})
 	</script>
 
 </body>
