@@ -4,6 +4,7 @@ require('./db/mongoose')
 const path=require('path')
 const hbs=require('hbs')
 const login=require('./models/login')
+const blog=require('./models/blog')
 
 const app=express()
 const port=process.env.PORT || 3000
@@ -53,13 +54,25 @@ app.post('/login',async (req,res)=>{
     res.send({})
 })
 
-app.get('/home/:id',(req,res)=>{
+app.get('/home/:id',async (req,res)=>{
     if(req.params.id.length>4)
-        res.render('home')
+    {
+        try{
+        const blogs=await blog.find()
+        res.status(200).send({data:blogs})
+        }
+        catch(e){
+            res.status(500).send({error:e})
+        }
+    }
+        
     else    
         res.send('404')
     
   
+})
+app.get("*",(req,res)=>{
+    res.send('404')
 })
 
 app.listen(port,()=>{
