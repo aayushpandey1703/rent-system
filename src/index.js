@@ -54,13 +54,33 @@ app.post('/login',async (req,res)=>{
     res.send({})
 })
 
+//show blogs in range of 5
 app.get('/home/:id',async (req,res)=>{
-    if(req.params.id.length>4)
+    const index=req.query.index
+    if(req.params.id.length>4 && index)
     {
         try{
         const blogs=await blog.find()
-        res.status(200).send({data:blogs})
+    
+            
+        if(blogs.length==0)
+            res.render('home',{message:'No blog posted'})
+        else{
+            var blogList=[]
+            blogList=blogs.slice(index-5,index)
+
+            hbs.registerHelper('slice',(text)=>{
+                const myArray=text.split(" ")
+                var newString=""
+                for(let i=0;i<5;i++)
+                    newString+=" "+myArray[i]
+                return newString
+
+            })
+
+            res.render('home',{data:blogList})
         }
+    }
         catch(e){
             res.status(500).send({error:e})
         }
@@ -71,6 +91,12 @@ app.get('/home/:id',async (req,res)=>{
     
   
 })
+
+// how particular post
+app.get('/home/:id/:title',(req,res)=>{
+    res.send(req.params.title)
+})
+
 app.get("*",(req,res)=>{
     res.send('404')
 })

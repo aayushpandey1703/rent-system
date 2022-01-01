@@ -5,7 +5,7 @@ const blog=mongoose.model('blog',{
         type:String,
         trim:true,
     },
-    decription:{
+    description:{
         type:String,
         trim:true
     },
@@ -15,7 +15,7 @@ const blog=mongoose.model('blog',{
         default:'Anonymous'
     },
     date:{
-        type:String,
+        type:String
     }
 })
 
