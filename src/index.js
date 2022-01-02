@@ -5,6 +5,7 @@ const path=require('path')
 const hbs=require('hbs')
 const login=require('./models/login')
 const blog=require('./models/blog')
+const e = require('express')
 
 const app=express()
 const port=process.env.PORT || 3000
@@ -92,9 +93,17 @@ app.get('/home/:id',async (req,res)=>{
   
 })
 
-// how particular post
-app.get('/home/:id/:title',(req,res)=>{
-    res.send(req.params.title)
+// show particular post
+app.get('/home/:id/:title',async (req,res)=>{
+    const title=req.params.title
+    try{
+    const post=await blog.findOne({title:title})
+    res.render('post',{data:post})
+    }
+    catch(e){
+        res.status(500).send({error:e})
+    }
+    
 })
 
 app.get("*",(req,res)=>{

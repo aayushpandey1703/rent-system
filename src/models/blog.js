@@ -14,6 +14,10 @@ const blog=mongoose.model('blog',{
         trim:true,
         default:'Anonymous'
     },
+    image:{
+        type:String,
+        default:'post.jpg'
+    },
     date:{
         type:String
     }
