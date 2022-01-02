@@ -43,16 +43,23 @@ app.post('/register',async (req,res)=>{
         res.send({error:undefined})
 
     }catch(e){
+        console.log(e)
         res.send({error:e})
     }
     
 })
 
 app.post('/login',async (req,res)=>{
-     const user=await login.findOne(req.body)
-     if (!user)
-        return res.send({error:'User does not exist'})
+    try{
+     const user=await login.findByCredentials(req.body.email,req.body.password)
+     if (user.error)
+        return res.send(user)
     res.send({})
+    }
+    catch(e){
+        console.log(e)
+        res.send({error:e})
+    }
 })
 
 //show blogs in range of 5
