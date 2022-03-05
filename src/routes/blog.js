@@ -44,6 +44,7 @@ router.get('/home/:id',async (req,res)=>{
   
 })
 
+
 // show particular post
 router.get('/home/:id/:title',async (req,res)=>{
     const title=req.params.title

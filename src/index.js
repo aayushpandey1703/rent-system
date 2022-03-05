@@ -8,7 +8,9 @@ const blogRouter=require('./routes/blog')
 
 const app=express()
 const port=process.env.PORT || 3000
+
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json())
 
 const publicDirectoryPath=path.join(__dirname,'../public')
 const viewsPath=path.join(__dirname,"../template/views")
