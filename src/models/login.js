@@ -1,4 +1,5 @@
 const mongoose=require('mongoose')
+const jwt=require('jsonwebtoken')
 const validator=require('validator')
 const bcrypt=require('bcryptjs')
 
@@ -25,7 +26,12 @@ const userSchema=new mongoose.Schema({
         required:true,
         trim:true,
         minlength:5
-    }
+    },
+    tokens:[{
+        token:{
+            type:String
+        }
+    }]
 })
 
 // create findByCredentials of model
@@ -39,7 +45,15 @@ userSchema.statics.findByCredentials=async (email,password)=>{
     return user
 }
 
-// hashind pasword
+userSchema.methods.generateAuthToken=async function(){
+    const user=this
+    const token=jwt.sign({_id:user._id.toString()}, "newtoken")
+    user.tokens=user.tokens.concat({token:token})
+    await user.save()
+    return token
+}
+
+// hashing password
 userSchema.pre('save',async function(next){
     const user=this
     if(user.isModified('password'))
