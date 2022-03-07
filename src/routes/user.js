@@ -1,9 +1,11 @@
 const express=require('express')
 const login=require('../models/login')
 const cookieParser=require('cookie-parser')
-const router=new express.Router()
 const app=express()
-app.use(cookieParser)
+
+app.use(cookieParser())
+
+const router=new express.Router()
 
 router.post('/register',async (req,res)=>{
     try{
@@ -12,6 +14,7 @@ router.post('/register',async (req,res)=>{
         await newUser.save()
         const token=await newUser.generateAuthToken()
         res.cookie("access_token",token,{
+            
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
           }).send({error:undefined,token:token})

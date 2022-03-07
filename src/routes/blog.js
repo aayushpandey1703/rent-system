@@ -1,15 +1,14 @@
 const express=require('express')
 const blog=require('../models/blog')
 const hbs=require('hbs')
+const auth=require('../middleware/middleware')
 
 const router=new express.Router()
 
 
 //show blogs in range of 5
-router.get('/home/:id',async (req,res)=>{
-    const index=req.query.index
-    if(req.params.id.length>4 && index)
-    {
+router.get('/home',auth,async (req,res)=>{
+  const index=req.query.index
         try{
         const blogs=await blog.find()
     
@@ -36,10 +35,8 @@ router.get('/home/:id',async (req,res)=>{
             console.log(e)
             res.status(500).send({error:e})
         }
-    }
-        
-    else    
-        res.send('404')
+    
+
     
   
 })
