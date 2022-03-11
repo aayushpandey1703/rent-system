@@ -29,17 +29,18 @@
                         <hr class="small">
                         <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </header>
     <!-- Main Content -->
+    
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                {{#each data}}
                 <div class="post-preview">
-                    <a href="/home/12345/{{this.title}}">
+                    <a href="/{{this._id}}/{{this.title}}">
                         <h2 class="post-title" style="text-align: center;">
                             {{this.title}}
                         </h2>
@@ -54,7 +55,7 @@
                 <!-- Pager -->
                 <ul class="pager">
                     <li class="next">
-                        <a href="/home/12345?index=10">Older Posts &rarr;</a>
+                        <a href="?index=10">Older Posts &rarr;</a>
                     </li>
                 </ul>
             </div>

@@ -1,18 +1,16 @@
 const express=require('express')
 const blog=require('../models/blog')
 const hbs=require('hbs')
-const auth=require('../middleware/middleware')
+const {auth,partialAuth}=require('../middleware/middleware')
 
 const router=new express.Router()
 
 
 //show blogs in range of 5
-router.get('/home',auth,async (req,res)=>{
-  const index=req.query.index
+router.get('',partialAuth,async (req,res)=>{
+  const index=req.query.index||5
         try{
-        const blogs=await blog.find()
-    
-            
+        const blogs=await blog.find()            
         if(blogs.length==0)
             res.render('home',{message:'No blog posted'})
         else{
@@ -27,27 +25,23 @@ router.get('/home',auth,async (req,res)=>{
                 return newString
 
             })
-
-            res.render('home',{data:blogList})
+            res.render('home',{data:blogList,user:req.user})
         }
     }
         catch(e){
             console.log(e)
             res.status(500).send({error:e})
         }
-    
-
-    
   
 })
 
 
 // show particular post
-router.get('/home/:id/:title',async (req,res)=>{
-    const title=req.params.title
+router.get('/:id/:title',partialAuth,async (req,res)=>{
+    const id=req.params.id
     try{
-    const post=await blog.findOne({title:title})
-    res.render('post',{data:post})
+    const post=await blog.findBlog(id,req.token)
+    res.render('post',{data:post,user:req.user})
     }
     catch(e){
         res.status(500).send({error:e})

@@ -22,9 +22,6 @@ hbs.registerPartials(partialsPath)
 
 app.use(express.static(publicDirectoryPath))
 
-app.get("",(req,res)=>{ 
-    res.render('login')
-})
 
 app.use(userRouter)
 app.use(blogRouter)
@@ -36,3 +33,7 @@ app.get("*",(req,res)=>{
 app.listen(port,()=>{
     console.log('server listening on port: ',port)
 })
+
+//task
+// 1. create user frontend for user profile
+// 2. create write blog
