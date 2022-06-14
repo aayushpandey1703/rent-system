@@ -18,8 +18,7 @@
 
     <!-- Navigation -->
     {{>header}}
- <!-- Page Header -->
-    <!-- Set your background image for this header on the line below. -->
+
     <header class="intro-header" style="background-image: url('../../img/home-bg.jpg')">
         <div class="container">
             <div class="row">
@@ -48,7 +47,7 @@
                             {{slice this.description}}..
                         </h3>
                     </a>
-                    <p class="post-meta">Posted by <a href="#">{{this.author}}</a> on {{this.date}}</p>
+                    <p class="post-meta">Posted by <a href="{{this.author}}">{{this.author}}</a> on {{this.date}}</p>
                 </div>
                 <hr>
                {{/each}}

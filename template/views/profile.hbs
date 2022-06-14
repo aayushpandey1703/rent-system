@@ -47,16 +47,18 @@
                 <div id="user-img">
                     <img src="images/blue-plain-background-images.jpg" alt="something went wrong">
                 </div>
+                {{#if this.k}}
                 <div id="edit-profile">
                     <button type="button" class="btn btn-primary-light" data-bs-toggle="modal" data-bs-target="#exampleModal"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" data-supported-dps="24x24" fill="currentColor" class="mercado-match" width="24" height="24" focusable="false">
                         <path d="M21.13 2.86a3 3 0 00-4.17 0l-13 13L2 22l6.19-2L21.13 7a3 3 0 000-4.16zM6.77 18.57l-1.35-1.34L16.64 6 18 7.35z"></path>
                       </svg></button>
                 </div>
+                {{/if}}
                 <div id="user-info">
-                    <h2>Aayush Pandey</h2>
+                    <h2>{{this.data.username}}</h2>
                     <h5>Tech-Author | Traveller</h5>
                     <h6>8452918276</h6>
-                    <h6>pandeyaayush81@gmail.com</h6>
+                    <h6>{{this.data.email}}</h6>
                     <ul>
                         <li>361 followers</li>
                         <li>500 followings</li>
@@ -74,7 +76,7 @@
                         <div id="posted">
                             
                             <img src="https://img.icons8.com/external-outline-juicy-fish/60/000000/external-write-contact-us-outline-outline-juicy-fish-2.png" width="25px" height="30px"/><div id="posted-number">
-                            <a href="#"><h5>10 Posted</h5></a>
+                            <a href="#"><h5>{{this.data.count}} Posted</h5></a>
                             <h6>Discover how many blogs you posted</h6>
                             </div>
 

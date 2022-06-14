@@ -7,7 +7,7 @@ const router=new express.Router()
 
 
 //show blogs in range of 5
-router.get('',partialAuth,async (req,res)=>{
+router.get('',async (req,res)=>{
   const index=req.query.index||5
         try{
         const blogs=await blog.find()            
@@ -37,7 +37,7 @@ router.get('',partialAuth,async (req,res)=>{
 
 
 // show particular post
-router.get('/:id/:title',partialAuth,async (req,res)=>{
+router.get('/:id/:title',auth,async (req,res)=>{
     const id=req.params.id
     try{
     const post=await blog.findBlog(id,req.token)

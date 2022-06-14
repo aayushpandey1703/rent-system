@@ -1,5 +1,6 @@
 const express=require('express')
 const login=require('../models/login')
+const blog=require('../models/blog')
 const cookieParser=require('cookie-parser')
 const {auth,partialAuth}=require('../middleware/middleware')
 const app=express()
@@ -54,14 +55,17 @@ router.post('/login',async (req,res)=>{
     }
 })
 
+
 // user profile endpoint
-router.get('/user/:id',auth,async (req,res)=>{
-    const id=req.params.id
+router.get('/:name',auth,async (req,res)=>{
+    const name=req.params.name
     try{
-        const user=await login.findOne({_id:id})
-    if (id==req.user._id)
-        return res.send({data:user,user:req.user})
-    res.send({data:user})
+        var user=await login.findOne({username:name})
+        const numberPost=await blog.count({author:name})
+        user.count=numberPost
+    if (name==req.user.username)
+        return res.render("profile",{data:user,k:true})
+    res.render("profile",{data:user,k:false})
     
 }
     catch(e){

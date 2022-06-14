@@ -22,7 +22,7 @@ const auth=async (req,res,next)=>{
     }
     catch(e)
     {
-        res.redirect('/')
+        res.redirect('/register')
     }
 }
 
