@@ -1,10 +1,10 @@
  <!-- Bootstrap Core CSS -->
+
     <link href="..\..\css\bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="..\..\css\clean-blog.min.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -31,11 +31,15 @@
                     <li>
                         <a href="about.html">About</a>
                     </li>
-                    <li>
+                    <li id="user">
                         <a href="/register">Sign in</a>
                     </li>
+
                     <li>
                         <a href="contact.html">Contact</a>
+                    </li>
+                    <li id="signout">
+                        <a href="/dashboard">Sign out</a>
                     </li>
                 </ul>
             </div>
@@ -54,3 +58,14 @@
     <!-- Custom Theme JavaScript -->
     <script src="..\..\js\clean-blog.min.js"></script>
     
+    <script>
+        let x=document.cookie
+        if(x)   
+        {
+            $("#user").hide()
+        }
+        else{
+            $("#signout").hide()
+        }
+        
+    </script>

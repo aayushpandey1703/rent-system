@@ -57,7 +57,7 @@ router.post('/login',async (req,res)=>{
 
 
 // user profile endpoint
-router.get('/:name',auth,async (req,res)=>{
+router.get('/author/:name',auth,async (req,res)=>{
     const name=req.params.name
     try{
         var user=await login.findOne({username:name})
@@ -71,6 +71,13 @@ router.get('/:name',auth,async (req,res)=>{
     catch(e){
         res.send({error:e})
     }
+})
+
+router.get('/dashboard',auth,async (req,res)=>{
+    var user=req.user
+    const count=await blog.count({author:user.username})
+    user.count=count
+    res.render("dashboard",{user:user})
 })
 
 

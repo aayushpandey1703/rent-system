@@ -1,6 +1,6 @@
 <html>
     <head>
-    <title>Aayush Pandey</title>
+    <title>{{this.data.username}}</title>
     
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,17 +35,36 @@
         </div>
       </div>
 
-        <header>
-            {{>header}}
-        </header>
+    <div id="wrapper">
+        {{>admin_header}}
+
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">
+                            Profile<small> {{this.data.username}}</small>
+                        </h1>
+						<ol class="breadcrumb">
+  <li><a href="#">Home</a></li>
+  <li><a href="#">Library</a></li>
+  <li class="active">Data</li>
+</ol>
+                    </div>
+                </div>
+				
+				
+                <!-- /. ROW  -->
 
        <div id="main">
            
-    <link  href="css/index.css" rel="stylesheet">
+    <link  href="../../css/index.css" rel="stylesheet">
            <div id="general">
-                <img src="images/istockphoto-540848970-170667a.jpg" width="100%" height="50%">
                 <div id="user-img">
-                    <img src="images/blue-plain-background-images.jpg" alt="something went wrong">
+                    <img src="../../images/blue-plain-background-images.jpg" alt="something went wrong">
                 </div>
                 {{#if this.k}}
                 <div id="edit-profile">
@@ -96,10 +115,15 @@
             </div>
        </div>
 
-        {{>footer}}
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-       
+      <script>
+   
+  var element=document.getElementById('dashboard')
+  element.removeAttribute("class")
+
+  document.getElementById("profile").setAttribute("class","active-menu")
+ </script>
  <script>
      var exampleModal = document.getElementById('exampleModal')
 exampleModal.addEventListener('show.bs.modal', function (event) {
@@ -116,7 +140,9 @@ exampleModal.addEventListener('show.bs.modal', function (event) {
 
   modalTitle.textContent = 'New message to ' + recipient
   modalBodyInput.value = recipient
+
 })
  </script>
+
     </body>
 </html>

@@ -9,7 +9,8 @@ app.use(cookieParser())
 const auth=async (req,res,next)=>{
     try
     {
-    const token=req.headers.cookie                                                          // get cookies from client (access_token={token value})
+    const token=req.headers.cookie.split(";")[0]
+                                                                                  // get cookies from client (access_token={token value})
     const tokenFilter=token.replace('access_token=',"")                                     // {token value}                
     const check=jwt.verify(tokenFilter,"newtoken")
     const user=await login.findOne({_id:check._id,'tokens.token':tokenFilter})
