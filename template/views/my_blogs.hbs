@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>My Blogs</title>
+    
+    </head>
+    <body>
+    {{>admin_header}}
+
+    <div id="page-wrapper">
+
+      {{#each data}}
+        
+ <div class="card text-bg-light mb-3" style="max-width: 138rem; border-radius: 20px;cursor:pointer;box-shadow:1px 1px 1px 1px;background:rgb(228, 221, 212)" onclick="go('{{this._id}}','{{this.title}}')">
+  
+  <div class="card-body">
+    <h2 class="card-title"><b> {{this.title}}</b></h2>
+    <p class="card-text" >{{this.description}}</p>
+  </div>
+</div>
+
+{{/each}}
+
+    </div>
+
+<script>
+    function go(id,title){
+        
+        window.location.href="/"+id+"/"+title
+    }
+    
+  var element=document.getElementById('dashboard')
+  element.removeAttribute("class")
+
+  document.getElementById("my").setAttribute("class","active-menu")
+ 
+</script>
+    </body>
+</html>

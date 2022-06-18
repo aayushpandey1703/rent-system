@@ -49,4 +49,42 @@ router.get('/:id/:title',auth,async (req,res)=>{
     
 })
 
+router.get("/Blog",auth,async (req,res)=>{
+    hbs.registerHelper('date',()=>{
+        const d=new Date()
+
+        return d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear()
+    })
+
+    res.render("add_blog",{data:req.user})
+})
+
+router.post("/Blog",auth,async (req,res)=>{
+    try{
+        const e=new Date()
+        
+        req.body.author=req.user.username
+        req.body.date=e.getDate()+"/"+e.getMonth()+"/"+e.getFullYear()
+        
+        const newBlog=new blog(req.body)
+        await newBlog.save()
+        res.send({response:"done"})
+
+    }
+    catch(e)
+    {
+        res.send({error:e})
+    }
+})
+
+router.get("/MyBlog",auth,async (req,res)=>{
+    try{
+    const blogs=await blog.find({author:req.user.username})
+    res.render("my_blogs",{data:blogs,user:req.user})
+    }
+    catch(e){
+        res.sned({error:e})
+    }
+})
+
 module.exports=router

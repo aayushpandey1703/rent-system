@@ -23,6 +23,7 @@ hbs.registerPartials(partialsPath)
 app.use(express.static(publicDirectoryPath))
 
 
+
 app.use(userRouter)
 app.use(blogRouter)
 
@@ -35,5 +36,4 @@ app.listen(port,()=>{
 })
 
 //task
-// 1. create user frontend for user profile
-// 2. create write blog
+// 1. create my blog endpoint

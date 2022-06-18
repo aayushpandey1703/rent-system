@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  </head>
+    <body>
+{{>header}}
+
+ <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header class="intro-header" style="background-image: url('../../img/post-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="post-heading">
+                        <h1 style="text-align: center;"><input type="text" id="title" name="title"  autofocus required></h1>
+                        <span class="meta" style="text-align: center;">Posted by <a href="#">{{data.username}}</a> on {{date}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                   <textarea name="description" id="description" rows="30" cols="80" required></textarea>
+
+                </div>
+            </div>
+        </div>
+    </article>
+    <button type="submit" name="publish">submit</button>
+    <hr>
+{{>footer}}
+<!-- Latest compiled and minified CSS -->
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script>
+
+$('button').click((e)=>{
+    e.preventDefault()
+    const title=$("#title").val()
+    const description=$("#description").val()
+    if(title && description)
+    {
+        $.ajax({
+            type:'post',
+            url:'/Blog',
+            data:{
+                "title":title,
+                "description":description
+            },
+            dataType:'text'
+
+        }).done((result)=>{
+            const resultObject=JSON.parse(result)
+            if(resultObject.error)
+                alert("something went wrong")
+            else   
+                window.location.href="/"
+        })
+    }
+   else{
+    if(title=="")
+        alert("title cannot be empty")
+   }
+   
+})
+
+</script>
+    </body>
+</html>
