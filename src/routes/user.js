@@ -80,5 +80,36 @@ router.get('/dashboard',auth,async (req,res)=>{
     res.render("dashboard",{user:user})
 })
 
+router.get("/logout",auth,async(req,res)=>{
+    try{
+        req.user.tokens=req.user.tokens.filter((token)=>{
+            return token.token !== req.token
+        })
+        await req.user.save()
+        res.clearCookie("access_token")
+        res.clearCookie("status")
+        res.redirect("/")
+    }
+    catch(e){
+        res.send({error:e})
+    }
+})
+
+router.get("/logoutall",auth,async(req,res)=>{
+    try{
+       
+        req.user.tokens=[]
+        
+        console.log(req.user)
+        await req.user.save()
+        res.clearCookie("access_token")
+        res.clearCookie("status")
+        res.redirect("/")
+    }
+    catch(e)
+    {
+        res.send({error:e})
+    }
+})
 
 module.exports=router
